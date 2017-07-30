@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 pata.
+ * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,6 @@
 package se.trixon.nbmpc.actions;
 
 import java.awt.event.ActionEvent;
-import static javax.swing.Action.NAME;
-import javax.swing.JPopupMenu;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
@@ -33,19 +31,14 @@ import se.trixon.nbmpc.ui.VolumePanel;
 @Messages("CTL_VolumePanelAction=Volume panel")
 public final class VolumePanelAction extends ToolbarButton {
 
-    private final VolumePanel mPanel;
-    private final JPopupMenu mPopupMenu = new JPopupMenu();
-
     public VolumePanelAction() {
-        putValue(NAME, Bundle.CTL_MainPanelAction());
-        mIconGetter = MaterialIcon._Av.VOLUME_UP;
-        updateIcon();
-        mPanel = new VolumePanel();
-        mPopupMenu.add(mPanel);
+        initPopup(new VolumePanel());
+        setTitle(Bundle.CTL_VolumePanelAction());
+        setMaterialIcon(MaterialIcon._Av.VOLUME_UP);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        mPopupMenu.show(mButton, -(mPanel.getWidth() - mButton.getWidth()) / 2, mButton.getHeight());
+        showPopup();
     }
 }

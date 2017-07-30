@@ -20,18 +20,29 @@ package se.trixon.nbmpc.ui;
  * @author Patrik Karlsson
  */
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JToolBar;
+import org.bff.javampd.player.Player;
 import org.openide.util.actions.Presenter;
 import se.trixon.almond.util.icons.IconColor;
 import se.trixon.almond.util.icons.material.MaterialIcon;
+import se.trixon.nbmpc.Mpc;
 
 public abstract class ToolbarButton extends AbstractAction implements Presenter.Toolbar {
 
-    protected JButton mButton;
-    protected IconColor mIconColor = IconColor.WHITE;
-    protected MaterialIcon.IconGetter mIconGetter;
+    private static final int ICON_SIZE = 22;
+    private MaterialIcon.IconGetter mMaterialIcon;
+    private JButton mButton;
+    protected final Mpc mMpc = Mpc.getInstance();
+    private JPanel mPanel;
+    private JPopupMenu mPopupMenu = new JPopupMenu();
+    protected Player mPlayer = mMpc.getMpd().getPlayer();
 
     public ToolbarButton() {
         init();
@@ -56,12 +67,41 @@ public abstract class ToolbarButton extends AbstractAction implements Presenter.
         return mButton;
     }
 
+    public void setMaterialIcon(MaterialIcon.IconGetter materialIcon) {
+        mMaterialIcon = materialIcon;
+        mButton.setIcon(mMaterialIcon.get(ICON_SIZE, IconColor.getForBackground(mButton.getBackground())));
+    }
+
     private void init() {
         mButton = new JButton();
         mButton.addActionListener(this);
+        mButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseEntered(MouseEvent e) {
+                showPopup();
+            }
+        });
     }
 
-    protected void updateIcon() {
-        mButton.setIcon(mIconGetter.get(22, mIconColor));
+    protected void initPopup(JPanel panel) {
+        mPanel = panel;
+        mPopupMenu.add(mPanel);
+        mPopupMenu.show(null, Integer.MAX_VALUE, Integer.MAX_VALUE);
+        mPopupMenu.setVisible(false);
+    }
+
+    protected void setTitle(String title) {
+        putValue(NAME, title);
+        if (mPanel == null) {
+            mButton.setToolTipText(title);
+        }
+    }
+
+    protected void showPopup() {
+        if (mPanel != null) {
+            mPopupMenu.show(mButton, -(mPanel.getWidth() - mButton.getWidth()) / 2, mButton.getHeight());
+        } else if (mButton.getParent() instanceof JToolBar) {
+            mPopupMenu.show(mButton, 0, 0);
+        }
     }
 }

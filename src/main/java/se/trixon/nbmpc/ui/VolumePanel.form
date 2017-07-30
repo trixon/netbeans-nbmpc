@@ -2,6 +2,11 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JPanelFormInfo">
   <Properties>
+    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+        <EtchetBorder/>
+      </Border>
+    </Property>
     <Property name="opaque" type="boolean" value="false"/>
   </Properties>
   <AuxValues>
@@ -21,19 +26,21 @@
     <Property name="axis" type="int" value="3"/>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JSlider" name="jSlider1">
+    <Container class="javax.swing.JPanel" name="buttonPanel">
+
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+        <Property name="columns" type="int" value="2"/>
+        <Property name="rows" type="int" value="1"/>
+      </Layout>
+    </Container>
+    <Component class="javax.swing.JSlider" name="slider">
       <Properties>
         <Property name="orientation" type="int" value="1"/>
         <Property name="alignmentY" type="float" value="1.0"/>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JToggleButton" name="jToggleButton1">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="se/trixon/nbmpc/ui/Bundle.properties" key="VolumePanel.jToggleButton1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="alignmentX" type="float" value="0.5"/>
-      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="sliderStateChanged"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

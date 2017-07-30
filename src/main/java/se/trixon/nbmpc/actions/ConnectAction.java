@@ -17,28 +17,23 @@ package se.trixon.nbmpc.actions;
 
 import java.awt.event.ActionEvent;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.nbmpc.ui.MainPanel;
 import se.trixon.nbmpc.ui.ToolbarButton;
 
-@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.MainPanel")
+@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.Connect")
 @ActionRegistration(lazy = false, displayName = "NOT-USED")
-@ActionReference(path = "Toolbars/nbmpc", position = 99)
 
-@Messages("CTL_MainPanelAction=Show panel")
-public final class MainPanelAction extends ToolbarButton {
+@Messages("CTL_ConnectAction=Connect")
+public final class ConnectAction extends ToolbarButton {
 
-    public MainPanelAction() {
-        initPopup(new MainPanel());
-        setTitle(Bundle.CTL_MainPanelAction());
-        setMaterialIcon(MaterialIcon._Navigation.EXPAND_MORE);
+    public ConnectAction() {
+        setTitle(Bundle.CTL_ConnectAction());
+        setMaterialIcon(MaterialIcon._Communication.CALL_MADE);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        showPopup();
     }
 }

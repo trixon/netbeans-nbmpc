@@ -17,28 +17,24 @@ package se.trixon.nbmpc.actions;
 
 import java.awt.event.ActionEvent;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.nbmpc.ui.MainPanel;
 import se.trixon.nbmpc.ui.ToolbarButton;
 
-@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.MainPanel")
+@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.VolumeUnMute")
 @ActionRegistration(lazy = false, displayName = "NOT-USED")
-@ActionReference(path = "Toolbars/nbmpc", position = 99)
 
-@Messages("CTL_MainPanelAction=Show panel")
-public final class MainPanelAction extends ToolbarButton {
+@Messages("CTL_VolumeUnMuteAction=Un mute")
+public final class VolumeUnMuteAction extends ToolbarButton {
 
-    public MainPanelAction() {
-        initPopup(new MainPanel());
-        setTitle(Bundle.CTL_MainPanelAction());
-        setMaterialIcon(MaterialIcon._Navigation.EXPAND_MORE);
+    public VolumeUnMuteAction() {
+        setTitle(Bundle.CTL_VolumeUnMuteAction());
+        setMaterialIcon(MaterialIcon._Av.VOLUME_UP);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        showPopup();
+        mMpc.getMpd().getPlayer().unMute();
     }
 }

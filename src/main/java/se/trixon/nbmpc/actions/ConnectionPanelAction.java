@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 pata.
+ * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,29 @@
 package se.trixon.nbmpc.actions;
 
 import java.awt.event.ActionEvent;
-import static javax.swing.Action.NAME;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 import se.trixon.almond.util.icons.material.MaterialIcon;
+import se.trixon.nbmpc.ui.ConnectionPanel;
 import se.trixon.nbmpc.ui.ToolbarButton;
 
-@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.TrackPrevAction")
+@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.ConnectionPanel")
 @ActionRegistration(lazy = false, displayName = "NOT-USED")
 @ActionReference(path = "Toolbars/nbmpc", position = 0)
 
-@Messages("CTL_TrackPrevAction=Previous track")
-public final class TrackPrevAction extends ToolbarButton {
+@Messages("CTL_ConnectionPanelAction=Connection")
+public final class ConnectionPanelAction extends ToolbarButton {
 
-    public TrackPrevAction() {
-        putValue(NAME, Bundle.CTL_TrackPrevAction());
-        mIconGetter = MaterialIcon._Av.SKIP_PREVIOUS;
-        updateIcon();
+    public ConnectionPanelAction() {
+        initPopup(new ConnectionPanel());
+        setTitle(Bundle.CTL_ConnectionPanelAction());
+        setMaterialIcon(MaterialIcon._Hardware.COMPUTER);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        showPopup();
     }
 }

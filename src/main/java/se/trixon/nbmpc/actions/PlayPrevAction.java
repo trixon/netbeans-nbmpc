@@ -21,24 +21,22 @@ import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 import se.trixon.almond.util.icons.material.MaterialIcon;
-import se.trixon.nbmpc.ui.MainPanel;
 import se.trixon.nbmpc.ui.ToolbarButton;
 
-@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.MainPanel")
+@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.PlayPrev")
 @ActionRegistration(lazy = false, displayName = "NOT-USED")
-@ActionReference(path = "Toolbars/nbmpc", position = 99)
+@ActionReference(path = "Toolbars/nbmpc", position = 10)
 
-@Messages("CTL_MainPanelAction=Show panel")
-public final class MainPanelAction extends ToolbarButton {
+@Messages("CTL_PlayPrevAction=Previous track")
+public final class PlayPrevAction extends ToolbarButton {
 
-    public MainPanelAction() {
-        initPopup(new MainPanel());
-        setTitle(Bundle.CTL_MainPanelAction());
-        setMaterialIcon(MaterialIcon._Navigation.EXPAND_MORE);
+    public PlayPrevAction() {
+        setTitle(Bundle.CTL_PlayPrevAction());
+        setMaterialIcon(MaterialIcon._Av.SKIP_PREVIOUS);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        showPopup();
+        mMpc.getMpd().getPlayer().playPrevious();
     }
 }

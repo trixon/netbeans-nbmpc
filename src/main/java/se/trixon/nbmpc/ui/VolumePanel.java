@@ -16,7 +16,12 @@
 package se.trixon.nbmpc.ui;
 
 import javax.swing.JButton;
-import se.trixon.nbmpc.actions.TrackToggleAction;
+import org.bff.javampd.player.Player;
+import org.bff.javampd.player.VolumeChangeEvent;
+import org.bff.javampd.player.VolumeChangeListener;
+import se.trixon.nbmpc.Mpc;
+import se.trixon.nbmpc.actions.VolumeMuteAction;
+import se.trixon.nbmpc.actions.VolumeUnMuteAction;
 
 /**
  *
@@ -24,14 +29,30 @@ import se.trixon.nbmpc.actions.TrackToggleAction;
  */
 public class VolumePanel extends javax.swing.JPanel {
 
+    Mpc mpc = Mpc.getInstance();
+    protected Player mPlayer = mpc.getMpd().getPlayer();
+
     /**
      * Creates new form VolumePanel
      */
     public VolumePanel() {
         initComponents();
-        JButton b = new TrackToggleAction().getButton();
-        b.setAlignmentX(0.5F);
-        add(b);
+
+        mPlayer.addVolumeChangeListener(new VolumeChangeListener() {
+            @Override
+            public void volumeChanged(VolumeChangeEvent event) {
+                slider.setValue(event.getVolume());
+            }
+        });
+
+        VolumeMuteAction muteAction = new VolumeMuteAction();
+        JButton muteButton = muteAction.getButton();
+
+        VolumeUnMuteAction unmuteAction = new VolumeUnMuteAction();
+        JButton unmuteButton = unmuteAction.getButton();
+
+        buttonPanel.add(muteButton);
+        buttonPanel.add(unmuteButton);
     }
 
     /**
@@ -42,23 +63,33 @@ public class VolumePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSlider1 = new javax.swing.JSlider();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        buttonPanel = new javax.swing.JPanel();
+        slider = new javax.swing.JSlider();
 
+        setBorder(javax.swing.BorderFactory.createEtchedBorder());
         setOpaque(false);
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.PAGE_AXIS));
 
-        jSlider1.setOrientation(javax.swing.JSlider.VERTICAL);
-        jSlider1.setAlignmentY(1.0F);
-        add(jSlider1);
+        buttonPanel.setLayout(new java.awt.GridLayout(1, 2));
+        add(buttonPanel);
 
-        jToggleButton1.setText(org.openide.util.NbBundle.getMessage(VolumePanel.class, "VolumePanel.jToggleButton1.text")); // NOI18N
-        jToggleButton1.setAlignmentX(0.5F);
-        add(jToggleButton1);
+        slider.setOrientation(javax.swing.JSlider.VERTICAL);
+        slider.setAlignmentY(1.0F);
+        slider.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                sliderStateChanged(evt);
+            }
+        });
+        add(slider);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void sliderStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_sliderStateChanged
+        // TODO add your handling code here:
+        mpc.getMpd().getPlayer().setVolume(slider.getValue());
+    }//GEN-LAST:event_sliderStateChanged
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSlider jSlider1;
-    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JPanel buttonPanel;
+    private javax.swing.JSlider slider;
     // End of variables declaration//GEN-END:variables
 }

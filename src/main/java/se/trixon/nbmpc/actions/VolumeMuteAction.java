@@ -1,5 +1,5 @@
 /*
- * Copyright 2017 pata.
+ * Copyright 2017 Patrik Karlsson.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,28 +16,25 @@
 package se.trixon.nbmpc.actions;
 
 import java.awt.event.ActionEvent;
-import static javax.swing.Action.NAME;
 import org.openide.awt.ActionID;
-import org.openide.awt.ActionReference;
 import org.openide.awt.ActionRegistration;
 import org.openide.util.NbBundle.Messages;
 import se.trixon.almond.util.icons.material.MaterialIcon;
 import se.trixon.nbmpc.ui.ToolbarButton;
 
-@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.TrackNextAction")
+@ActionID(category = "nbmpc", id = "se.trixon.nbmpc.actions.VolumeMute")
 @ActionRegistration(lazy = false, displayName = "NOT-USED")
-@ActionReference(path = "Toolbars/nbmpc", position = 2)
 
-@Messages("CTL_TrackNextAction=Next track")
-public final class TrackNextAction extends ToolbarButton {
+@Messages("CTL_VolumeMuteAction=Mute")
+public final class VolumeMuteAction extends ToolbarButton {
 
-    public TrackNextAction() {
-        putValue(NAME, Bundle.CTL_TrackNextAction());
-        mIconGetter = MaterialIcon._Av.SKIP_NEXT;
-        updateIcon();
+    public VolumeMuteAction() {
+        setTitle(Bundle.CTL_VolumeMuteAction());
+        setMaterialIcon(MaterialIcon._Av.VOLUME_OFF);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        mMpc.getMpd().getPlayer().mute();
     }
 }
